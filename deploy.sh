@@ -1,43 +1,6 @@
 #!/bin/bash
 source config/tput_color_echo.sh
 
-green "请选择服务类型"
-green "1) 更新源"
-green "2) 安装 docker-compose"
-green "3) 初始化 nginx 配置"
-green "4) 初始化 headscale 配置"
-green "5) 运行容器"
-green "6) 按顺序执行12345"
-green "7) 退出"
-read -r number
-case $number in
-1)
-  change_apt_sources
-  ;;
-2)
-  install_docker_compose
-  ;;
-3)
-  nginx_init
-  ;;
-4)
-  headscale_init
-  ;;
-5)
-  run_docker_compose
-  ;;
-6)
-  change_apt_sources
-  install_docker_compose
-  nginx_init
-  headscale_init
-  run_docker_compose
-  ;;
-7)
-  exit
-  ;;
-esac
-
 function change_apt_sources() {
   green '换源'
   cp /etc/apt/sources.list /etc/apt/sources.list.bak
@@ -88,3 +51,40 @@ function run_docker_compose() {
   docker-compose up -d
   docker ps
 }
+
+green "请选择服务类型"
+green "1) 更新源"
+green "2) 安装 docker-compose"
+green "3) 初始化 nginx 配置"
+green "4) 初始化 headscale 配置"
+green "5) 运行容器"
+green "6) 按顺序执行12345"
+green "7) 退出"
+read -r number
+case $number in
+1)
+  change_apt_sources
+  ;;
+2)
+  install_docker_compose
+  ;;
+3)
+  nginx_init
+  ;;
+4)
+  headscale_init
+  ;;
+5)
+  run_docker_compose
+  ;;
+6)
+  change_apt_sources
+  install_docker_compose
+  nginx_init
+  headscale_init
+  run_docker_compose
+  ;;
+7)
+  exit
+  ;;
+esac
