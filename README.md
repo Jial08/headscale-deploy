@@ -2,8 +2,8 @@
 
 headscale 一键部署，Ubuntu20.04LTS 环境
 
-参考
-<https://github.com/juanfont/headscale>
+参考\
+<https://github.com/juanfont/headscale>\
 <https://icloudnative.io/posts/how-to-set-up-or-migrate-headscale/#headscale-%E9%83%A8%E7%BD%B2>
 
 ## 1.防火墙开放端口
