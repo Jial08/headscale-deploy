@@ -1,0 +1,19 @@
+{
+    "Regions": {
+        "901": {
+            "RegionID": 901,
+            "RegionCode": "tx-sh",
+            "RegionName": "Tencent Shanghai",
+            "Nodes": [
+                {
+                    "Name": "901a",
+                    "RegionID": 901,
+                    "DERPPort": 8443,
+                    "HostName": "192.168.10.60",
+                    "IPv4": "192.168.10.60",
+                    "InsecureForTests": true
+                }
+            ]
+        }
+    }
+}

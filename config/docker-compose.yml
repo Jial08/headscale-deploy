@@ -1,0 +1,63 @@
+version: "3.7"
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 81:80
+      - 443:443
+    volumes:
+      - /opt/nginx/conf:/etc/nginx/conf.d
+      - /opt/nginx/logs:/var/log/nginx
+      - /opt/nginx/html:/usr/share/nginx/html
+      - /opt/nginx/cert:/etc/nginx/cert
+      - /etc/localtime:/etc/localtime:ro
+  ip_derper:
+    image: yangchuansheng/ip_derper
+    container_name: ip_derper
+    restart: always
+    environment:
+      - DERP_ADDR=:8443
+    network_mode: host
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+    depends_on:
+      - nginx
+  headscale:
+    image: headscale/headscale
+    container_name: headscale
+    restart: always
+    ports:
+      - 0.0.0.0:5010:5010
+      - 127.0.0.1:9090:9090
+    volumes:
+      - /etc/headscale/:/etc/headscale/
+      - /var/lib/headscale/:/var/lib/headscale/
+    command: headscale serve
+    depends_on:
+      - nginx
+      - ip_derper
+  headscale-webui:
+    image: ghcr.io/ifargle/headscale-webui
+    container_name: headscale-webui
+    restart: always
+    environment:
+      - TZ=Asia/Shanghai
+      - COLOR=red                              # Use the base colors (ie, no darken-3, etc) - 
+      - HS_SERVER=http://127.0.0.1:5010    # Reachable endpoint for your Headscale server
+      - DOMAIN_NAME=http://127.0.0.1:5010  # The base domain name for this container.
+      - KEY="RIyfKAqkmbe/IbWZJm5wr1swUV5WgTcQvloA98w+rY0="             # Generate with "openssl rand -base64 32" - used to encrypt your key on disk.
+      - AUTH_TYPE=basic                         # AUTH_TYPE is either Basic or OIDC.  Empty for no authentication
+      - LOG_LEVEL=info                         # Log level.  "DEBUG", "ERROR", "WARNING", or "INFO".  Default "INFO"
+      # ENV for Basic Auth (Used only if AUTH_TYPE is "Basic").  Can be omitted if you aren't using Basic Auth
+      - BASIC_AUTH_USER=headscale                   # Used for basic auth
+      - BASIC_AUTH_PASS=headscale                   # Used for basic auth
+    ports:
+      - 5000:5000
+    volumes:
+      - ./volume:/data                         # Headscale-WebUI's storage.  Make sure ./volume is readable by UID 1000 (chown 1000:1000 ./volume)
+      - /etc/headscale/:/etc/headscale/:ro # Headscale's config storage location.  Used to read your Headscale config. ro:readonly.
+    depends_on:
+      - headscale
