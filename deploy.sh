@@ -10,7 +10,7 @@ function change_apt_sources() {
 
 function install_docker() {
   green 'docker 换源'
-  mkdir /etc/docker
+  mkdir -p /etc/docker
   cp config/daemon.json /etc/docker
   green '安装 docker'
   apt-get remove docker docker-engine docker.io containerd runc
@@ -28,6 +28,7 @@ function install_docker() {
     tee /etc/apt/sources.list.d/docker.list >/dev/null
   apt-get update
   apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+  docker version
 }
 
 function install_docker_compose() {
