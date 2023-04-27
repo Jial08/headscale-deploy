@@ -17,6 +17,7 @@ function change_apt_sources() {
   cp /etc/apt/sources.list /etc/apt/sources.list.bak
   cp config/sources2004.list /etc/apt/sources.list
   apt update
+  set +x
 }
 
 function install_docker() {
@@ -27,7 +28,7 @@ function install_docker() {
   set +x
   green '安装 docker'
   set -x
-  apt-get remove docker docker-engine docker.io containerd runc
+#  apt-get remove docker docker-engine docker.io containerd runc
   apt-get update
   apt-get install \
     ca-certificates \
@@ -43,6 +44,7 @@ function install_docker() {
   apt-get update
   apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
   docker version
+  set +x
 }
 
 function install_docker_compose() {
@@ -52,6 +54,7 @@ function install_docker_compose() {
   chmod +x /usr/local/bin/docker-compose
   ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   docker-compose version
+  set +x
 }
 
 function nginx_init() {
@@ -66,6 +69,7 @@ function nginx_init() {
   sed -i "s/192.168.10.60/$ip/g" /opt/nginx/conf/server.conf
   cp config/nginx/derp.json /opt/nginx/html/derp.json
   sed -i "s/192.168.10.60/$ip/g" /opt/nginx/html/derp.json
+  set +x
 }
 
 function headscale_init() {
@@ -78,6 +82,7 @@ function headscale_init() {
   touch /var/lib/headscale/db.sqlite
   cp config/config.yaml /etc/headscale
   sed -i "s/192.168.10.60/$ip/g" /etc/headscale/config.yaml
+  set +x
 }
 
 function run_docker_compose() {
@@ -88,6 +93,7 @@ function run_docker_compose() {
   cd /opt/headscale
   docker-compose up -d
   docker ps
+  set +x
 }
 
 green "请选择服务类型"
