@@ -8,10 +8,29 @@ function change_apt_sources() {
   apt update
 }
 
-function install_docker_compose() {
+function install_docker() {
   green 'docker 换源'
   mkdir /etc/docker
   cp config/daemon.json /etc/docker
+  green '安装 docker'
+  apt-get remove docker docker-engine docker.io containerd runc
+  apt-get update
+  apt-get install \
+    ca-certificates \
+    curl \
+    gnupg
+  install -m 0755 -d /etc/apt/keyrings
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+  chmod a+r /etc/apt/keyrings/docker.gpg
+  echo \
+    "deb [arch="$(dpkg --print-architecture)" signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+  "$(. /etc/os-release && echo "$VERSION_CODENAME")" stable" |
+    tee /etc/apt/sources.list.d/docker.list >/dev/null
+  apt-get update
+  apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+}
+
+function install_docker_compose() {
   green '安装 docker-compose'
   curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
@@ -54,31 +73,36 @@ function run_docker_compose() {
 
 green "请选择服务类型"
 green "1) 更新源"
-green "2) 安装 docker-compose"
-green "3) 初始化 nginx 配置"
-green "4) 初始化 headscale 配置"
-green "5) 运行容器"
-green "6) 按顺序执行12345"
-green "7) 退出"
+green "2) 安装 docker"
+green "3) 安装 docker-compose"
+green "4) 初始化 nginx 配置"
+green "5) 初始化 headscale 配置"
+green "6) 运行容器"
+green "7) 按顺序执行123456"
+green "8) 退出"
 read -r number
 case $number in
 1)
   change_apt_sources
   ;;
 2)
-  install_docker_compose
+  install_docker
   ;;
 3)
-  nginx_init
+  install_docker_compose
   ;;
 4)
-  headscale_init
+  nginx_init
   ;;
 5)
+  headscale_init
+  ;;
+6)
   run_docker_compose
   ;;
 6)
   change_apt_sources
+  install_docker
   install_docker_compose
   nginx_init
   headscale_init
