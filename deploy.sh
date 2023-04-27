@@ -119,7 +119,7 @@ case $number in
 6)
   run_docker_compose
   ;;
-6)
+7)
   change_apt_sources
   install_docker
   install_docker_compose
@@ -127,7 +127,7 @@ case $number in
   headscale_init
   run_docker_compose
   ;;
-7)
+8)
   exit
   ;;
 esac
