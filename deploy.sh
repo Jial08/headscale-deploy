@@ -1,4 +1,14 @@
 #!/bin/bash
+# set -e，脚本只要发生错误，就终止执行。
+set -o errexit
+# set -u，遇到不存在的变量就会报错，并停止执行
+set -o nounset
+# set -e 有一个例外情况，就是不适用于管道命令。所谓管道命令，就是多个子命令通过管道运算符（|）组合成为一个大的命令。Bash 会把最后一个子命令的返回值，作为整个命令的返回值。也就是说，只要最后一个子命令不失败，管道命令总是会执行成功，因此它后面命令依然会执行，set -e就失效了。
+# set -o pipefail用来解决这种情况，只要一个子命令失败，整个管道命令就失败，脚本就会终止执行。
+set -o pipefail
+# 在脚本中设置 -x 参数，让命令执行时打印其命令本身和参数，+x 关闭
+set -x
+
 source config/tput_color_echo.sh
 
 function change_apt_sources() {
