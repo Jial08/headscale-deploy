@@ -31,9 +31,9 @@ TCP:5000
 ### 2.2 查看状态
 
 ```bash
-$ docker-compose exec headscale headscale user create jl
+$ docker exec headscale headscale user create jl
 # 通过 Pre-Authkeys 接入，生成一个一小时的 pre-authkey 的 token
-$ docker-compose exec headscale headscale preauthkeys create -e 10h -u jl
+$ docker exec headscale headscale preauthkeys create -e 10h -u jl
 729fabe383247345c22f970af43219eb8aa500cc632f89eb
 ```
 
@@ -42,7 +42,7 @@ $ docker-compose exec headscale headscale preauthkeys create -e 10h -u jl
 - headscale
 
 ```bash
-# docker 的话命令前加 docker-compose exec headscale
+# docker 的话命令前加 docker exec headscale
 # 查看命名空间
 headscale user list
 # 创建命名空间 default
@@ -118,7 +118,7 @@ pong from b0be835b5c26 (fd7a:115c:a1e0::3) via 101.82.215.60:19852 in 63ms
 
 ```bash
 # 创建 API Key，(e.g. 30m, 24h) (default "90d")
-docker-compose exec headscale headscale apikeys create
+docker exec headscale headscale apikeys create
 ```
 
 <http://192.168.10.60:5000/>\
