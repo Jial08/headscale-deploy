@@ -121,7 +121,7 @@ pong from b0be835b5c26 (fd7a:115c:a1e0::3) via 101.82.215.60:19852 in 63ms
 docker-compose exec headscale headscale apikeys create
 ```
 
-<http://192.168.10.60:5000/>
+<http://192.168.10.60:5000/>\
 根据提示填写 docker-compose.yml 填写的用户名密码，填写 API Key 并保存
 
 ### 3.2 免费 IP 证书
@@ -186,10 +186,10 @@ Exit Node功能允许您通过网络上的特定设备路由所有非 Tailscale 
     tailscale up --login-server=http://192.168.10.60:5010 --accept-dns=false --authkey 729fabe383247345c22f970af43219eb8aa500cc632f89eb
     ```
 
-3. 配置Synology以启用出站连接
+3. 配置Synology以启用出站连接\
 <https://tailscale.com/kb/1131/synology/>
-![5c3cd28310b212cf9dbc1648f6f894a6.png](http://10.6.8.1:7000/images/2023/04/03/5c3cd28310b212cf9dbc1648f6f894a6.png)
-![960d7ab58421aa22a8c75aa8f4e0bf91.png](http://10.6.8.1:7000/images/2023/04/03/960d7ab58421aa22a8c75aa8f4e0bf91.png)
+![5c3cd28310b212cf9dbc1648f6f894a6.png](img/5c3cd28310b212cf9dbc1648f6f894a6.png)
+![960d7ab58421aa22a8c75aa8f4e0bf91.png](img/960d7ab58421aa22a8c75aa8f4e0bf91.png)
 
     ```bash
     /var/packages/Tailscale/target/bin/tailscale configure-host
@@ -201,12 +201,12 @@ Exit Node功能允许您通过网络上的特定设备路由所有非 Tailscale 
 1. 美区商店下载 Tailscale
 2. 修改控制服务器
 浏览器访问：<http://192.168.10.60:5010/apple>
-![3d0d842e91bca36404357cd95cd4d6f5.jpg](https://cdn.jsdelivr.net/gh/Jial08/blog-image/2022/3d0d842e91bca36404357cd95cd4d6f5.jpg)
+![3d0d842e91bca36404357cd95cd4d6f5.jpeg](img/3d0d842e91bca36404357cd95cd4d6f5.jpeg)
 点击下载描述文件并安装
 3. 打开 Tailscale 点击 Log in... 会跳转到浏览器
 4. 复制浏览器的命令并修改 NAMESPACE 后在服务器执行
 5. 删除多余账号
-![24b1830a1dfeb7c25292d95f1bb425c6.png](http://10.6.8.1:7000/images/2023/04/01/24b1830a1dfeb7c25292d95f1bb425c649af8111f26994bc.png)
+![24b1830a1dfeb7c25292d95f1bb425c6.png](img/24b1830a1dfeb7c25292d95f1bb425c649af8111f26994bc.png)
 
 ### 6.3 linux
 
