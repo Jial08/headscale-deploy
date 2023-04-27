@@ -126,7 +126,8 @@ docker-compose exec headscale headscale apikeys create
 
 ### 3.2 免费 IP 证书
 
-<https://zerossl.com/>
+<https://zerossl.com/>\
+为了验证证书，需要将 nginx 的 80 端口暂时开放
 
 - https 配置，
 

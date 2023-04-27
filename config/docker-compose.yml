@@ -15,7 +15,7 @@ services:
       - /etc/localtime:/etc/localtime:ro
   ip_derper:
     image: yangchuansheng/ip_derper
-    container_name: ip_derper
+    container_name: derper
     restart: always
     environment:
       - DERP_ADDR=:8443
@@ -26,7 +26,7 @@ services:
     depends_on:
       - nginx
   headscale:
-    image: headscale/headscale
+    image: headscale/headscale:0.22.0
     container_name: headscale
     restart: always
     ports:
@@ -39,15 +39,17 @@ services:
     depends_on:
       - nginx
       - ip_derper
+    links:
+      - nginx
   headscale-webui:
-    image: ghcr.io/ifargle/headscale-webui
+    image: ghcr.io/ifargle/headscale-webui:v0.6.1
     container_name: headscale-webui
     restart: always
     environment:
       - TZ=Asia/Shanghai
       - COLOR=red                              # Use the base colors (ie, no darken-3, etc) - 
-      - HS_SERVER=http://127.0.0.1:5010    # Reachable endpoint for your Headscale server
-      - DOMAIN_NAME=http://127.0.0.1:5010  # The base domain name for this container.
+      - HS_SERVER=http://headscale:5010    # Reachable endpoint for your Headscale server
+      - DOMAIN_NAME=http://headscale:5010  # The base domain name for this container.
       - KEY="RIyfKAqkmbe/IbWZJm5wr1swUV5WgTcQvloA98w+rY0="             # Generate with "openssl rand -base64 32" - used to encrypt your key on disk.
       - AUTH_TYPE=basic                         # AUTH_TYPE is either Basic or OIDC.  Empty for no authentication
       - LOG_LEVEL=info                         # Log level.  "DEBUG", "ERROR", "WARNING", or "INFO".  Default "INFO"
@@ -61,3 +63,6 @@ services:
       - /etc/headscale/:/etc/headscale/:ro # Headscale's config storage location.  Used to read your Headscale config. ro:readonly.
     depends_on:
       - headscale
+    links:
+      - headscale
+      - nginx

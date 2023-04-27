@@ -101,7 +101,7 @@ derp:
     # 默认 derp
     - https://controlplane.tailscale.com/derpmap/default
     # 自己的 derp
-    - http://127.0.0.1:81/derp.json
+    - http://nginx/derp.json
 
   # Locally available DERP map files encoded in YAML
   #

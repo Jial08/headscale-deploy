@@ -92,6 +92,7 @@ function run_docker_compose() {
   cp config/docker-compose.yml /opt/headscale
   cd /opt/headscale
   docker-compose up -d
+  chown 1000:1000 /opt/headscale/volume
   docker ps
   set +x
 }
