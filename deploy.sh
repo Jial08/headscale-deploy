@@ -1,4 +1,6 @@
 #!/bin/bash
+source config/tput_color_echo.sh
+
 # set -e，脚本只要发生错误，就终止执行。
 set -o errexit
 # set -u，遇到不存在的变量就会报错，并停止执行
@@ -7,12 +9,11 @@ set -o nounset
 # set -o pipefail用来解决这种情况，只要一个子命令失败，整个管道命令就失败，脚本就会终止执行。
 set -o pipefail
 # 在脚本中设置 -x 参数，让命令执行时打印其命令本身和参数，+x 关闭
-set -x
-
-source config/tput_color_echo.sh
+#set -x
 
 function change_apt_sources() {
   green '换源'
+  set -x
   cp /etc/apt/sources.list /etc/apt/sources.list.bak
   cp config/sources2004.list /etc/apt/sources.list
   apt update
@@ -20,9 +21,12 @@ function change_apt_sources() {
 
 function install_docker() {
   green 'docker 换源'
+  set -x
   mkdir -p /etc/docker
   cp config/daemon.json /etc/docker
+  set +x
   green '安装 docker'
+  set -x
   apt-get remove docker docker-engine docker.io containerd runc
   apt-get update
   apt-get install \
@@ -43,6 +47,7 @@ function install_docker() {
 
 function install_docker_compose() {
   green '安装 docker-compose'
+  set -x
   curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
   ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
@@ -53,6 +58,7 @@ function nginx_init() {
   green '初始化 nginx 配置'
   read -rp "输入服务器IP：" ip
   green '服务器IP：' "$ip"
+  set -x
   mkdir -p /opt/nginx/{conf,html,cert}
   cp config/nginx/192.168.10.60.crt /opt/nginx/cert/"$ip".crt
   cp config/nginx/192.168.10.60.key /opt/nginx/cert/"$ip".key
@@ -66,6 +72,7 @@ function headscale_init() {
   green '初始化 headscale'
   read -rp "输入服务器IP：" ip
   green '服务器IP：' "$ip"
+  set -x
   mkdir -p /etc/headscale
   mkdir -p /var/lib/headscale
   touch /var/lib/headscale/db.sqlite
@@ -75,6 +82,7 @@ function headscale_init() {
 
 function run_docker_compose() {
   green '运行 nginx、ip_derper、headscale、headscale-webui'
+  set -x
   mkdir -p /opt/headscale
   cp config/docker-compose.yml /opt/headscale
   cd /opt/headscale
