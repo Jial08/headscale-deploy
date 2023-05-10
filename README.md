@@ -230,6 +230,10 @@ tailscale up --login-server=http://192.168.10.60:5110 --accept-routes=true --acc
 3. 在iOS应用程序切换器中关闭应用程序重新启动应用程序，根据提示会跳转到新的页面
 4. 将页面中出现的命令在 headscale 服务器执行，这时应该页面会自动关闭并登录，如果没有，多试几遍
 
+### 6.5 Windows
+
+<https://github.com/juanfont/headscale/blob/main/docs/windows-client.md>
+
 ## 7.clash与tailscale的兼容问题
 
 <https://github.com/Dreamacro/clash/issues/2251>
