@@ -52,7 +52,6 @@ function install_docker_compose() {
   set -x
   curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
-  ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
   docker-compose version
   set +x
 }
