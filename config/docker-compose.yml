@@ -42,7 +42,7 @@ services:
     links:
       - nginx
   headscale-webui:
-    image: ghcr.io/ifargle/headscale-webui
+    image: ghcr.io/ifargle/headscale-webui:v0.6.1
     container_name: headscale-webui
     restart: always
     environment:
