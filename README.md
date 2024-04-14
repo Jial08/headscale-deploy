@@ -114,7 +114,26 @@ pong from b0be835b5c26 (fd7a:115c:a1e0::3) via 101.82.215.60:19852 in 63ms
 
 ## 3.headscale-webui
 
-### 3.1 连接 headscale
+### 3.1 bug 修复
+
+参考：
+https://github.com/iFargle/headscale-webui/pull/127
+https://github.com/l00ps/headscale-webui/commit/8a7dc9b91a155ca6651c6a39a3efb0106a75c0e0
+
+```bash
+# 容器启动后进入容器交互
+docker exec -u app -it headscale-webui /bin/sh
+# 修改文件
+cd /app
+# 将 /api/v1/machine 修改为 /api/v1/node
+vi vi headscale.py
+# 将 "machines" 修改为 "nodes"
+vi renderer.py
+exit
+# 重启容器即可
+```
+
+### 3.2 连接 headscale
 
 ```bash
 # 创建 API Key，(e.g. 30m, 24h) (default "90d")
@@ -124,7 +143,7 @@ docker exec headscale headscale apikeys create
 <http://192.168.10.60:5000/>\
 根据提示填写 docker-compose.yml 填写的用户名密码，填写 API Key 并保存
 
-### 3.2 免费 IP 证书
+### 3.3 免费 IP 证书
 
 <https://zerossl.com/>\
 为了验证证书，需要将 nginx 的 80 端口暂时开放
