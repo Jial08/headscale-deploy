@@ -126,8 +126,8 @@ docker exec -u app -it headscale-webui /bin/sh
 # 修改文件
 cd /app
 # 将 /api/v1/machine 修改为 /api/v1/node
-vi vi headscale.py
-# 将 "machines" 修改为 "nodes"
+vi headscale.py
+# 将 "machines" 修改为 "nodes"，'machines' 修改为 'nodes'，"machine" 改为 "node"，'machine' 改为 'node'，lastSuccessfulUpdate 改为 lastSeen
 vi renderer.py
 exit
 # 重启容器即可
