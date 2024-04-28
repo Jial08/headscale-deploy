@@ -125,10 +125,12 @@ https://github.com/l00ps/headscale-webui/commit/8a7dc9b91a155ca6651c6a39a3efb010
 docker exec -u app -it headscale-webui /bin/sh
 # 修改文件
 cd /app
-# 将 /api/v1/machine 修改为 /api/v1/node
 vi headscale.py
 # 将 "machines" 修改为 "nodes"，'machines' 修改为 'nodes'，"machine" 改为 "node"，'machine' 改为 'node'，lastSuccessfulUpdate 改为 lastSeen
 vi renderer.py
+cd /app/static/js
+# 将 response.machine 修改为 response.node
+vi custom.js
 exit
 # 重启容器即可
 ```
