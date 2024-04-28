@@ -50,7 +50,7 @@ function install_docker() {
 function install_docker_compose() {
   green '安装 docker-compose'
   set -x
-  curl -SL https://github.com/docker/compose/releases/download/v2.17.2/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
+  curl -SL https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-linux-x86_64 -o /usr/local/bin/docker-compose
   chmod +x /usr/local/bin/docker-compose
   docker-compose version
   set +x
@@ -59,7 +59,7 @@ function install_docker_compose() {
 function nginx_init() {
   green '初始化 nginx 配置'
   read -rp "输入服务器IP：" ip
-  green '服务器IP：' "$ip"
+  green "服务器IP：$ip"
   set -x
   mkdir -p /opt/nginx/{conf,html,cert}
   cp config/nginx/192.168.10.60.crt /opt/nginx/cert/"$ip".crt
@@ -74,7 +74,7 @@ function nginx_init() {
 function headscale_init() {
   green '初始化 headscale'
   read -rp "输入服务器IP：" ip
-  green '服务器IP：' "$ip"
+  green "服务器IP：$ip"
   set -x
   mkdir -p /etc/headscale
   mkdir -p /var/lib/headscale
@@ -89,6 +89,8 @@ function run_docker_compose() {
   set -x
   mkdir -p /opt/headscale
   cp config/docker-compose.yml /opt/headscale
+  read -rp "输入 headscale-webui 密码：" hwpassword
+  sed -i "s/hwpassword/$hwpassword/g" /opt/headscale/docker-compose.yml
   cd /opt/headscale
   docker-compose up -d
   chown 1000:1000 /opt/headscale/volume
