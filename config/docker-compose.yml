@@ -18,7 +18,7 @@ services:
     restart: always
     environment:
       - DERP_ADDR=:8443
-    network_mode: host
+    network_mode: bridge
     ports:
       - 8443:8443
       - 3478:3478/udp
