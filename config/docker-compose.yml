@@ -25,9 +25,11 @@ services:
     depends_on:
       - nginx
   headscale:
-    image: headscale/headscale:v0.23.0-alpha5
+    image: headscale/headscale:v0.23.0-beta1
     container_name: headscale
     restart: always
+    environment:
+      - TZ=Asia/Shanghai
     ports:
       - 0.0.0.0:5010:5010
       - 127.0.0.1:9090:9090
