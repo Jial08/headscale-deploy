@@ -291,3 +291,10 @@ dns_config:
   nameservers: []
     # - 1.1.1.1
 ```
+
+## 9.定时重启容器（可选）
+
+```bash
+$ crontab -e
+0 4 * * * docker-compose -f /opt/headscale/docker-compose.yml restart
+```
