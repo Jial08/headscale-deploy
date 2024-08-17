@@ -19,9 +19,10 @@ services:
     environment:
       - DERP_ADDR=:8443
     network_mode: host
-    ports:
-      - 8443:8443
-      - 3478:3478/udp
+#    network_mode: bridge
+#    ports:
+#      - 8443:8443
+#      - 3478:3478/udp
     depends_on:
       - nginx
   headscale:
